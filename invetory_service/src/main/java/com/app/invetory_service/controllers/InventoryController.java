@@ -24,7 +24,6 @@ public class InventoryController {
     @PostMapping("/in-stock")
     @ResponseStatus(HttpStatus.OK)
     public BaseResponse areInStock(@RequestBody List<OrderItemsRequest> orderItemsRequests){
-        System.out.println("paso por controller inventory");
         return inventoryService.areInStock(orderItemsRequests);
     }
 }

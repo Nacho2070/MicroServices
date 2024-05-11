@@ -24,7 +24,7 @@ public class OrderService {
 
        BaseResponse response = this.webClientBuilder.build()
                     .post()
-                    .uri("http://localhost:8083/demo/inventory/in-stock")
+                    .uri("lb://inventory-service/demo/inventory/in-stock")
                     .bodyValue(request.getOrderItems())
                      //Send the request.getOrderItems()
                      .retrieve()
@@ -36,7 +36,6 @@ public class OrderService {
          //We're going to generate a unique ID for the order
          order.setOrderNumber(UUID.randomUUID().toString());
          //set orderItems to order
-         //seteamos los valores de request itemRequest a orderItems y luego a requestItems y de alli a la entidad order
          order.setOrderItems(request.getOrderItems().stream()
          .map(orderItems-> mapOrderItemRequestToOrderItem(orderItems,order))
          .toList());
