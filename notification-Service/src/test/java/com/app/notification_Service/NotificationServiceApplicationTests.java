@@ -1,10 +1,10 @@
-package com.microService.config;
+package com.app.notification_Service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-@EneableConfigServer
+
 @SpringBootTest
-class ConfigApplicationTests {
+class NotificationServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

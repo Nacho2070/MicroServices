@@ -3,6 +3,10 @@ package com.app.orders_service.services;
 import java.util.List;
 import java.util.UUID;
 
+import com.app.orders_service.events.OrdersEvent;
+import com.app.orders_service.model.enums.OrderStatus;
+import com.app.orders_service.utils.JsonUtils;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -20,6 +24,7 @@ public class OrderService {
 
     private final WebClient.Builder webClientBuilder;
     private final OrderRepository orderRepository;
+    private final KafkaTemplate<String,String> kafkaTempleate;
     public void placeOrder(OrderRequest request) {
 
        BaseResponse response = this.webClientBuilder.build()
@@ -39,7 +44,11 @@ public class OrderService {
          order.setOrderItems(request.getOrderItems().stream()
          .map(orderItems-> mapOrderItemRequestToOrderItem(orderItems,order))
          .toList());
-          this.orderRepository.save(order);
+          var saveOrder = this.orderRepository.save(order);
+          this.kafkaTempleate.send("orders:topic", JsonUtils.toJson(
+                  new OrdersEvent(saveOrder.getOrderNumber(),saveOrder.getOrderItems().size(),OrderStatus.PLACED)
+          ));
+
       }else{
          throw new IllegalArgumentException("stock does´t exist");
       }

@@ -27,7 +27,7 @@
         <module>product_service</module>
 		 <module>ApiGateway</module>
 		 <module>discovery-server</module>
-		 <module>config</module>
+		 <module>notification-Service</module>
      </modules>
 
 	<dependencies>
