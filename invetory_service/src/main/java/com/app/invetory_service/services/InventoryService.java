@@ -18,7 +18,6 @@ public class InventoryService {
     public boolean isInStock(String sku) {
         var inventory = inventoryRepository.findBySku(sku);
         return inventory.filter(value -> value.getQuantity() > 0).isPresent();
-
     }
 
     public BaseResponse areInStock(List<OrderItemsRequest> orderItems) {

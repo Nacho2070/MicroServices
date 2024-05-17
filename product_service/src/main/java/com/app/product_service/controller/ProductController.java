@@ -21,14 +21,13 @@ public class ProductController {
     
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductResponse> getAllproducts(){
+    public List<ProductResponse> getAllProducts(){
         return this.productService.allProducts();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void insertProducts(@RequestBody ProductRequest request){
-         System.out.println("agragewsdf");
           productService.addProducts(request);
     }
 }

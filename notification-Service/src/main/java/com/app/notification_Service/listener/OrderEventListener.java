@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 public class OrderEventListener {
 
     @KafkaListener(topics = "orders-topic")
-    public void hadlerOrderNotifications(String message){
+    public void handlerOrderNotifications(String message){
         var orderEvent = JsonUtils.fromJson(message, OrdersEvent.class);
-        log.info("Error {} event recived for order: {} with {} items",orderEvent.orderStatus(),orderEvent.orderNumbers(),orderEvent.iItemCount());
+        log.info("Error {} event received for order: {} with {} items",orderEvent.orderStatus(),orderEvent.orderNumbers(),orderEvent.iItemCount());
     }
 }

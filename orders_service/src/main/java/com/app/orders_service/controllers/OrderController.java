@@ -25,14 +25,12 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void placeOrder(@RequestBody OrderRequest request){
-
      this.orderService.placeOrder(request);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponse> getOrder(){
-
       return this.orderService.getAllOrders();
     }
 }

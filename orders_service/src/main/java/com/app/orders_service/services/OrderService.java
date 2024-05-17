@@ -24,7 +24,7 @@ public class OrderService {
 
     private final WebClient.Builder webClientBuilder;
     private final OrderRepository orderRepository;
-    private final KafkaTemplate<String,String> kafkaTempleate;
+    private final KafkaTemplate<String,String> kafkaTemplate;
     public void placeOrder(OrderRequest request) {
 
        BaseResponse response = this.webClientBuilder.build()
@@ -44,13 +44,14 @@ public class OrderService {
          order.setOrderItems(request.getOrderItems().stream()
          .map(orderItems-> mapOrderItemRequestToOrderItem(orderItems,order))
          .toList());
+         //Send message to order topic
           var saveOrder = this.orderRepository.save(order);
-          this.kafkaTempleate.send("orders:topic", JsonUtils.toJson(
+          this.kafkaTemplate.send("orders:topic", JsonUtils.toJson(
                   new OrdersEvent(saveOrder.getOrderNumber(),saveOrder.getOrderItems().size(),OrderStatus.PLACED)
           ));
 
       }else{
-         throw new IllegalArgumentException("stock does´t exist");
+         throw new IllegalArgumentException("Some of the products are not in stock");
       }
                     
    }
@@ -66,7 +67,6 @@ public class OrderService {
     return new OrderResponse(order.getId(),
     order.getOrderNumber(),
     order.getOrderItems().stream()
-    //we gotta get the orderItemsResponse
     .map(this::mapToOrderItemsResponse).toList());
    }
 

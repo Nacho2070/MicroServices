@@ -35,9 +35,7 @@ public class ProductService {
 
   public List<ProductResponse> allProducts(){
     var products = repository.findAll();
-    log.info("READYYYY {}", products);
     return products.stream().map(this::mapToProductResponse).collect(Collectors.toList());
-
   }
 
   private ProductResponse mapToProductResponse(Product product){
