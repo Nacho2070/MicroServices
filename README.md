@@ -9,4 +9,4 @@
   
 - **WebClient for Microservices Communication**: Utilizes WebClient for communication between microservices.
 
-- **PostgreSQL and MySQL Databases**: Supports both PostgreSQL and MySQL databases. 
+- **PostgreSQL and MySQL Databases**: 
